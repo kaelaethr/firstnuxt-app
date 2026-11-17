@@ -11,7 +11,7 @@ useHead({ title: 'Profile' })
 
 const personalInfo = [
   { label: 'Full name', value: 'Khaiel Aldren A. Nasani' },
-  { label: 'Nickname', value: 'Kael' },
+  { label: 'Nickname', value: 'Kael (kaelo)' },
 ]
 
 const education = {
