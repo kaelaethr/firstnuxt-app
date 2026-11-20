@@ -1,2 +1,12 @@
 /* Load Tailwind CSS v4 (base styles, components and all utility classes). */
 @import "tailwindcss";
+
+/*
+  Custom design tokens. In Tailwind v4 these become utility classes:
+  --font-display -> `font-display`, --font-logo -> `font-logo`.
+  The fonts themselves are loaded from Google Fonts in app.vue.
+*/
+@theme {
+  --font-display: "Quicksand", ui-sans-serif, system-ui, sans-serif;
+  --font-logo: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}

@@ -1,19 +1,22 @@
 <!--
-  ProfileAvatar: circular profile photo.
+  ProfileAvatar: profile photo, either a circle or a tall "portrait" card.
   If /avatar.jpg is missing or fails to load, it shows initials instead
   of a broken-image icon (graceful degradation).
 
-  Usage: <ProfileAvatar alt="..." size="lg" />
+  Usage:
+    <ProfileAvatar alt="..." size="lg" />          circle
+    <ProfileAvatar alt="..." shape="portrait" />   fills its container's width
 -->
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    alt: string              // description of the photo (accessibility)
-    src?: string             // image path inside public/
-    initials?: string        // shown when the image can't load
-    size?: 'sm' | 'lg'       // two preset sizes
+    alt: string                    // description of the photo (accessibility)
+    src?: string                   // image path inside public/
+    initials?: string              // shown when the image can't load
+    size?: 'sm' | 'lg'             // circle size presets (ignored for portrait)
+    shape?: 'circle' | 'portrait'
   }>(),
-  { src: '/avatar.jpg', initials: 'KN', size: 'lg' },
+  { src: '/avatar.jpg', initials: 'KN', size: 'lg', shape: 'circle' },
 )
 
 // true once we know the image failed to load
@@ -29,21 +32,19 @@ onMounted(() => {
   }
 })
 
-// Size presets (size-* sets both width and height).
-const sizeClass = computed(() =>
-  props.size === 'lg' ? 'size-40 text-4xl sm:size-48' : 'size-20 text-xl',
-)
+// One full class string per look (Tailwind needs complete class names).
+const frameClass = computed(() => {
+  if (props.shape === 'portrait') {
+    return 'aspect-[4/5] w-full text-6xl shadow-2xl shadow-black/60'
+  }
+  const size = props.size === 'lg' ? 'size-40 text-4xl sm:size-48' : 'size-20 text-xl'
+  return `${size} rounded-full ring-2 ring-violet-400/40 ring-offset-4 ring-offset-zinc-950`
+})
 </script>
 
 <template>
-  <div
-    :class="[
-      sizeClass,
-      'relative shrink-0 overflow-hidden rounded-full bg-zinc-800',
-      'ring-2 ring-violet-400/40 ring-offset-4 ring-offset-zinc-950',
-    ]"
-  >
-    <!-- object-cover fills the circle; object-[50%_20%] keeps the face in frame -->
+  <div :class="[frameClass, 'relative shrink-0 overflow-hidden bg-zinc-800']">
+    <!-- object-cover fills the frame; object-[50%_20%] keeps the face in view -->
     <img
       v-if="!failed"
       ref="imgEl"

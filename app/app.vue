@@ -13,6 +13,15 @@ useHead({
   htmlAttrs: { lang: 'en', class: 'scheme-dark' },
   // Dark background on <body> so it never flashes white, even on overscroll.
   bodyAttrs: { class: 'bg-zinc-950 text-zinc-100 antialiased' },
+  // Fonts: Quicksand for headings, Space Grotesk for the logo.
+  link: [
+    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Quicksand:wght@500;600;700&display=swap',
+    },
+  ],
 })
 </script>
 
